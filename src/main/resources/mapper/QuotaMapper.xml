@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.imdroid.dao.mapper.QuotaMapper">
+    <!-- 添加任务 -->
+    <insert id="insertQuota" parameterType="Quota">
+        insert into quota
+        (pk,quota_type,defaults,lower_limit,upper_limit,weight)
+        values
+        (#{pk},#{quotaType},#{defaults},#{lowerLimit},#{upperLimit},#{weight})
+    </insert>
+    <!-- 更新任务 -->
+    <update id="updateQuota" parameterType="Quota">
+        update quota
+        <set>
+            <if test="quotaType != null and quotaType != ''">
+                quota_type = #{quotaType},
+            </if>
+            <if test="defaults != null and defaults != ''">
+                defaults = #{defaults},
+            </if>
+            <if test="lowerLimit != null and lowerLimit != ''">
+                lower_limit = #{lowerLimit},
+            </if>
+            <if test="upperLimit != null and upperLimit != ''">
+                upper_limit = #{upperLimit},
+            </if>
+            <if test="weight != null and weight != ''">
+                weight = #{weight},
+            </if>
+        </set>
+        <where>
+            pk = #{pk}
+        </where>
+    </update>
+    <!-- 删除任务 -->
+    <delete id="deleteQuota" parameterType="Long">
+        delete from quota
+        <where>
+            pk = #{pk}
+        </where>
+    </delete>
+    <!-- 删除任务 -->
+    <delete id="deleteAllQuota">
+        delete from quota
+    </delete>
+    <!-- 查看任务 根据pk -->
+    <select id="selectQuota" parameterType="Long"
+            resultType="Quota">
+        select * from quota
+        <where>
+            pk = #{pk}
+        </where>
+    </select>
+
+    <!-- 查看指标数据 根据quotaType -->
+    <select id="selectByQuotaType" parameterType="Integer"
+            resultType="Quota">
+        select * from quota
+        <where>
+            quota_type = #{quotaType}
+        </where>
+    </select>
+
+</mapper>

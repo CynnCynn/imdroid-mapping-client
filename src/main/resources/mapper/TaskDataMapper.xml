@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.imdroid.dao.mapper.TaskDataMapper">
+    <!-- 添加任务数据 -->
+    <insert id="insertTaskData" parameterType="TaskData">
+        insert into task_data
+        (pk,height,bay,depth,total_points,scoring_rate,station_number,complete,complete_time,task_pk)
+        values
+        (#{pk},#{height},#{bay},#{depth},#{totalPoints},#{scoringRate},#{stationNumber},#{complete},#{completeTime},#{taskPk})
+    </insert>
+    <!-- 更新任务数据 -->
+    <update id="updateTaskData" parameterType="TaskData">
+        update task_data
+        <set>
+            <if test="height != null and height != ''">
+                height = #{height},
+            </if>
+            <if test="bay != null and bay != ''">
+                bay = #{bay},
+            </if>
+            <if test="depth != null and depth != ''">
+                depth = #{depth},
+            </if>
+            <if test="totalPoints != null and totalPoints != ''">
+                total_points = #{totalPoints},
+            </if>
+            <if test="scoringRate != null and scoringRate != ''">
+                scoring_rate = #{scoringRate},
+            </if>
+            <if test="stationNumber != null and stationNumber != ''">
+                station_number = #{stationNumber},
+            </if>
+            <if test="complete != null and complete != ''">
+                complete = #{complete},
+            </if>
+            <if test="completeTime != null">
+                complete_time = #{completeTime},
+            </if>
+            <if test="taskPk != null and taskPk != ''">
+                task_pk = #{taskPk},
+            </if>
+        </set>
+        <where>
+            pk = #{pk}
+        </where>
+    </update>
+    <!-- 删除任务数据 -->
+    <delete id="deleteTaskData" parameterType="Long">
+        delete from task_data
+        <where>
+            pk = #{pk}
+        </where>
+    </delete>
+    <!-- 删除任务数据 -->
+    <delete id="deleteAllTaskData">
+        delete from task_data
+    </delete>
+    <!-- 查看任务数据 根据pk -->
+    <select id="selectTaskData" parameterType="Long"
+            resultType="TaskData">
+        select * from task_data
+        <where>
+            pk = #{pk}
+        </where>
+    </select>
+
+    <!-- 查看任务数据 根据pk -->
+    <select id="selectTaskDataByTaskPk" parameterType="Long"
+            resultType="TaskData">
+        select * from task_data
+        <where>
+            task_pk = #{taskPk}
+        </where>
+    </select>
+
+
+</mapper>

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.imdroid.dao.mapper.WallDataMapper">
+    <!-- 添加墙面数据 -->
+    <insert id="insertWallData" parameterType="WallData">
+        insert into wall_data
+        (pk,total_points,coordinate,axis,formula,name,image_path,image_path2,station_data_pk)
+        values
+        (#{pk},#{totalPoints},#{coordinate},#{axis},#{formula},#{name},#{imagePath},#{imagePath2},#{stationDataPk})
+    </insert>
+    <!-- 更新墙面数据 -->
+    <update id="updateWallData" parameterType="WallData">
+        update wall_data
+        <set>
+            <if test="totalPoints != null and totalPoints != ''">
+                total_points = #{totalPoints},
+            </if>
+            <if test="coordinate != null and coordinate != ''">
+                coordinate = #{coordinate},
+            </if>
+            <if test="axis != null and axis != ''">
+                axis = #{axis},
+            </if>
+            <if test="formula != null and formula != ''">
+                formula = #{formula},
+            </if>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="imagePath != null and imagePath != ''">
+                image_path = #{imagePath},
+            </if>
+            <if test="imagePath2 != null and imagePath2 != ''">
+                image_path2 = #{imagePath2},
+            </if>
+            <if test="stationDataPk != null and stationDataPk != ''">
+                station_data_pk = #{stationDataPk},
+            </if>
+        </set>
+        <where>
+            pk = #{pk}
+        </where>
+    </update>
+    <!-- 删除墙面数据 -->
+    <delete id="deleteWallData" parameterType="Long">
+        delete from wall_data
+        <where>
+            pk = #{pk}
+        </where>
+    </delete>
+    <!-- 删除墙面数据 -->
+    <delete id="deleteAllWallData">
+        delete from wall_data
+    </delete>
+    <!-- 删除墙面数据 -->
+    <delete id="deleteWallDataByStationDataPk" parameterType="Long">
+        delete from wall_data
+        <where>
+            station_data_pk = #{stationDataPk}
+        </where>
+    </delete>
+    <!-- 查看墙面数据 根据Pk -->
+    <select id="selectWallData" parameterType="Long"
+            resultType="WallData">
+        select * from wall_data
+        <where>
+            pk = #{pk}
+        </where>
+    </select>
+
+    <!-- 查看墙面数据 根据stationDataPk -->
+    <select id="selectWallDataByStationDataPk" parameterType="Long"
+            resultType="WallData">
+        select pk,name,image_path from wall_data
+        <where>
+            station_data_pk = #{stationDataPk}
+        </where>
+    </select>
+    <!-- 查看墙面数据 根据stationDataPk -->
+    <select id="selectCompleteWallDataByStationDataPk" parameterType="Long"
+            resultType="WallData">
+        select * from wall_data
+        <where>
+            station_data_pk = #{stationDataPk}
+        </where>
+    </select>
+
+
+</mapper>

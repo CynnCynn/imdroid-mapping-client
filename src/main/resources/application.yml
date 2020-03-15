@@ -1,0 +1,94 @@
+#默认使用配置
+spring:
+  profiles:
+    active: dev
+
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    # 使用druid数据源
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      initial-size: 5
+      max-active: 100
+      min-idle: 5
+      max-wait: 60000
+      pool-prepared-statements: true
+      max-open-prepared-statements: 20
+      validation-query: SELECT 1 FROM DUAL
+      validation-query-timeout: 60000
+      test-on-borrow: false
+      test-on-return: false
+      test-while-idle: true
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 100000
+
+
+
+#公共配置与profiles选择无关 mapperLocations指的路径是src/main/resources
+mybatis:
+  type-aliases-package: com.imdroid.pojo.entity
+  mapper-locations: classpath:mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+#日志配置
+logging:
+  config: classpath:log/logback-spring.xml
+  path: D:\imdroid\mapping\client\log
+  pattern:
+    #clr为颜色渲染类，在配置文件中声明
+    console: '%clr(%d{HH:mm:ss.SSS}){yellow} [%clr(%thread){red}] %clr(%-5level){blue} --- %clr(%logger){green} | %msg%n'
+    file: '%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level --- %logger{50} | %msg%n'
+  level:
+    #指定包的日志级别
+    com.imdroid: debug
+
+#web容器
+server:
+  port: 8888
+  tomcat:
+    uri-encoding: UTF-8
+    min-spare-threads: 20
+    max-threads: 100
+    accesslog:
+      enabled: true
+      pattern: common
+      directory: D:\imdroid\mapping\client\log
+  connection-timeout: 500ms
+
+
+---
+
+#开发配置
+spring:
+  profiles: dev
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/mapping-client?useUnicode=true&characterEncoding=UTF-8&useSSL=false&zeroDateTimeBehavior=convertToNull&rewriteBatchedStatements=true
+    username: root
+    password:
+    #password: helei1996
+  thymeleaf:
+    cache: false
+  #控制台在任何情况下（包括单元测试时）都打印彩色日志
+  output:
+    ansi:
+      enabled: always
+---
+# 测试环境配置
+spring:
+  profiles: test
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/mapping-client?useUnicode=true&characterEncoding=UTF-8&useSSL=false&zeroDateTimeBehavior=convertToNull&rewriteBatchedStatements=true
+    username: root
+    password:
+---
+# 生产环境配置
+spring:
+  profiles: prod
+  datasource:
+    url: jdbc:mysql://192.168.0.13:3306/mapping?useUnicode=true&characterEncoding=UTF-8&useSSL=false&zeroDateTimeBehavior=convertToNull&rewriteBatchedStatements=true
+    username: root
+    password:
+    druid:
+      test-on-borrow: true
+      test-on-return: true

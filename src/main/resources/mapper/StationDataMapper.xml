@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.imdroid.dao.mapper.StationDataMapper">
+    <!-- 添加测站数据 -->
+    <insert id="insertStationData" parameterType="StationData">
+        insert into station_data
+        (pk,height,bay,depth,total_points,scoring_rate,actual_order,complete,complete_time,station_alias,station_type,task_data_pk)
+        values
+        (#{pk},#{height},#{bay},#{depth},#{totalPoints},#{scoringRate},#{actualOrder},#{complete},#{completeTime},#{stationAlias},#{stationType},#{taskDataPk})
+    </insert>
+    <!-- 更新测站数据 -->
+    <update id="updateStationData" parameterType="StationData">
+        update station_data
+        <set>
+            <if test="height != null and height != ''">
+                height = #{height},
+            </if>
+            <if test="bay != null and bay != ''">
+                bay = #{bay},
+            </if>
+            <if test="depth != null and depth != ''">
+                depth = #{depth},
+            </if>
+            <if test="totalPoints != null and totalPoints != ''">
+                total_points = #{totalPoints},
+            </if>
+            <if test="scoringRate != null and scoringRate != ''">
+                scoring_rate = #{scoringRate},
+            </if>
+            <if test="actualOrder != null and actualOrder != ''">
+                actual_order = #{actualOrder},
+            </if>
+            <if test="complete != null and complete != ''">
+                complete = #{complete},
+            </if>
+            <if test="completeTime != null">
+                complete_time = #{completeTime},
+            </if>
+            <if test="stationAlias != null and stationAlias != ''">
+                station_alias = #{stationAlias},
+            </if>
+            <if test="stationType != null and stationType != ''">
+                station_type = #{stationType},
+            </if>
+            <if test="taskDataPk != null and taskDataPk != ''">
+                task_data_pk = #{taskDataPk},
+            </if>
+        </set>
+        <where>
+            pk = #{pk}
+        </where>
+    </update>
+    <!-- 删除测站数据 -->
+    <delete id="deleteStationData" parameterType="Long">
+        delete from station_data
+        <where>
+            pk = #{pk}
+        </where>
+    </delete>
+    <!-- 删除测站数据 -->
+    <delete id="deleteAllStationData">
+        delete from station_data
+    </delete>
+    <!-- 查看测站数据 根据pk -->
+    <select id="selectStationData" parameterType="Long"
+            resultType="StationData">
+        select * from station_data
+        <where>
+            pk = #{pk}
+        </where>
+    </select>
+    <!-- 查看测站数据 根据pk -->
+    <select id="selectStationDataByTaskDataPk" parameterType="Long"
+            resultType="StationData">
+        select * from station_data
+        <where>
+            task_data_pk = #{taskDataPk}
+        </where>
+    </select>
+</mapper>

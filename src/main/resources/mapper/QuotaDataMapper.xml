@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.imdroid.dao.mapper.QuotaDataMapper">
+    <!-- 添加指标数据 -->
+    <insert id="insertQuotaData" parameterType="QuotaData">
+        insert into quota_data
+        (pk,quota_value,quota_type,detection_points,pass_points,manuals,associate_type,associate_pk,quota_alias,standard_value)
+        values
+        (#{pk},#{quotaValue},#{quotaType},#{detectionPoints},#{passPoints},#{manuals},#{associateType},#{associatePk},#{quotaAlias},#{standardValue})
+    </insert>
+    <!-- 更新指标数据 -->
+    <update id="updateQuotaData" parameterType="QuotaData">
+        update quota_data
+        <set>
+            <if test="quotaValue != null and quotaValue != ''">
+                quota_value = #{quotaValue},
+            </if>
+            <if test="quotaType != null and quotaType != ''">
+                quota_type = #{quotaType},
+            </if>
+            <if test="detectionPoints != null and detectionPoints != ''">
+                detection_points = #{detectionPoints},
+            </if>
+            <if test="passPoints != null and passPoints != ''">
+                pass_points = #{passPoints},
+            </if>
+            <if test="manuals != null and manuals != ''">
+                manuals = #{manuals},
+            </if>
+            <if test="associateType != null and associateType != ''">
+                associate_type = #{associateType},
+            </if>
+            <if test="associatePk != null and associatePk != ''">
+                associate_pk = #{associatePk},
+            </if>
+            <if test="quotaAlias != null and quotaAlias != ''">
+                quota_alias = #{quotaAlias},
+            </if>
+            <if test="standardValue != null and standardValue != ''">
+                standard_value = #{standardValue},
+            </if>
+        </set>
+        <where>
+            pk = #{pk}
+        </where>
+    </update>
+    <!-- 删除指标数据 -->
+    <delete id="deleteQuotaData" parameterType="Long">
+        delete from quota_data
+        <where>
+            pk = #{pk}
+        </where>
+    </delete>
+    <!-- 删除指标数据 -->
+    <delete id="deleteAllQuotaData">
+        delete from quota_data
+    </delete>
+    <!-- 删除指标数据 -->
+    <delete id="deleteQuotaDataByAssociate" parameterType="Long">
+        delete from quota_data
+        <where>
+            <if test="associateType != 0">
+                and associate_type = #{associateType}
+            </if>
+            <if test="associatePk != 0">
+                and associate_pk = #{associatePk}
+            </if>
+        </where>
+    </delete>
+    <!-- 查看指标数据 根据pk -->
+    <select id="selectQuotaData" parameterType="Long"
+            resultType="QuotaData">
+        select * from quota_data
+        <where>
+            pk = #{pk}
+        </where>
+    </select>
+
+    <!-- 查看指标数据 根据pk -->
+    <select id="selectQuotaDataByAssociate" parameterType="Long"
+            resultType="QuotaData">
+        select * from quota_data
+        <where>
+            <if test="associateType != 0">
+                and associate_type = #{associateType}
+            </if>
+            <if test="associatePk != 0">
+                and associate_pk = #{associatePk}
+            </if>
+        </where>
+    </select>
+
+    <!-- 查看指标数据 根据pk -->
+    <select id="selectQuotaDataByQuotaType" parameterType="Long"
+            resultType="QuotaData">
+        select * from quota_data
+        <where>
+            <if test="associateType != 0">
+                and associate_type = #{associateType}
+            </if>
+            <if test="quotaType != 0">
+                and quota_type = #{quotaType}
+            </if>
+            <if test="associatePk != 0">
+                and associate_pk = #{associatePk}
+            </if>
+        </where>
+    </select>
+
+</mapper>
